@@ -1,7 +1,7 @@
-# `observec` installation
+# `observec` Installation
 
 The release tar (in private repo releases) contains everything else all binaries, the managed directory structure, and the compiled jar. You only need the following.
-## 1. What observec needs
+## 1. What `observec` needs
 
 | Need                   | Details                                                         |
 | ---------------------- | --------------------------------------------------------------- |
