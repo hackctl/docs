@@ -1,0 +1,25 @@
+services:
+  quartz:
+    image: node:22-bookworm
+    working_dir: /build
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/vault:ro
+    command: |
+      bash -c "
+      set -ex
+      rm -rf /build/quartz
+      git clone -b v4 https://github.com/jackyzha0/quartz.git /build/quartz
+      rm -rf /build/quartz/content/* /build/quartz/.quartz-cache /build/quartz/public
+      mkdir -p /build/quartz/content
+      cp -a /vault/. /build/quartz/content/
+      rm -rf /build/quartz/content/quartz /build/quartz/content/.git /build/quartz/content/.github /build/quartz/content/.obsidian /build/quartz/content/quartz.config.ts /build/quartz/content/quartz.layout.ts /build/quartz/content/custom.scss /build/quartz/content/docker-compose.quartz.yml /build/quartz/content/docker-compose.yml /build/quartz/content/compose.yml
+      [ -f /vault/quartz.config.ts ] && cp /vault/quartz.config.ts /build/quartz/
+      [ -f /vault/quartz.layout.ts ] && cp /vault/quartz.layout.ts /build/quartz/
+      [ -f /vault/custom.scss ] && cp /vault/custom.scss /build/quartz/quartz/styles/custom.scss
+      [ -f /vault/static/icon.png ] && cp /vault/static/icon.png /build/quartz/quartz/static/icon.png
+      cd /build/quartz
+      npm ci --no-audit --no-fund
+      npx quartz build --serve --port 8080
+      "

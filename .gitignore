@@ -1,0 +1,17 @@
+# Quartz framework (cloned at build time)
+quartz/
+.quartz-cache/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Obsidian
+.obsidian/
+
+# Build
+public/

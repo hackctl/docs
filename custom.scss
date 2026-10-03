@@ -1,0 +1,161 @@
+@use "./base.scss";
+
+// docs.hackctl.com sizing: 16px root, article at browser default scale.
+// chrome (nav/search) stays compact at 14px.
+html {
+  font-size: 16px;
+}
+
+body {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+// compact article type
+.center > article p,
+.center > article li {
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+
+.center > article h1,
+.page-header h1.article-title {
+  font-size: 1.35rem;
+  line-height: 1.3;
+}
+
+.center > article h2 {
+  font-size: 1.15rem;
+  line-height: 1.3;
+}
+
+.center > article h3 {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.center > article table {
+  font-size: 0.75rem;
+}
+
+// put your custom CSS here!
+header > .flex-component {
+  flex-grow: 1;
+}
+
+.search {
+  max-width: none;
+  width: 100%;
+  min-width: 280px;
+}
+
+.search > .search-button {
+  width: 100%;
+  max-width: 32rem;
+}
+
+// hide folder/tag item counts ("N items under this folder")
+.page-listing > p {
+  display: none;
+}
+
+// hide dates in file listings
+.section > .meta {
+  display: none;
+}
+
+// pin top bar (logo/search/theme/github) + breadcrumbs while scrolling.
+// NOTE: sticky (not fixed) so the bar keeps its full grid-column width.
+// (fixed + width:inherit shrink-wraps to content width and leaves a
+// see-through strip). Selector must match Quartz's specificity or the
+// built-in 6rem margin wins and pushes the bar down.
+.page > #quartz-body .page-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--light);
+  margin: 0;
+  padding: 1.5rem 0 0.5rem 0;
+  border-bottom: 1px solid var(--lightgray);
+}
+
+// flush inner header to the top like a navbar (Quartz default is 2rem margin)
+.page-header > header {
+  margin: 0;
+}
+
+.page-header .breadcrumb-container {
+  margin-top: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+// kill Quartz's 1.9rem h2 top-margin on UI headings (navbar logo, Explorer title)
+.page-header h2 {
+  margin: 0;
+}
+
+// slim the title inside the fixed bar (ArticleTitle defaults to 2rem top margin)
+.page-header h1.article-title {
+  margin: 0;
+}
+
+.sidebar h2,
+.sidebar h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+// outer gutters on the far left and right of the page
+.page > #quartz-body {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  column-gap: 1.5rem;
+}
+
+// wider middle: slimmer sidebars and a wider page cap (1700px)
+.page {
+  max-width: 1700px;
+}
+
+// slimmer sidebars on desktop so the middle gets the space
+@media all and (min-width: 1200px) {
+  .page > #quartz-body {
+    grid-template-columns: 240px auto 300px;
+  }
+}
+
+// wide view: hide both sidebars, middle takes the full page width
+:root[wide="on"] .page > #quartz-body {
+  grid-template-columns: auto;
+  grid-template-areas:
+    "grid-header"
+    "grid-center"
+    "grid-footer";
+}
+
+:root[wide="on"] .page > #quartz-body > .sidebar {
+  display: none;
+}
+
+// no indent guide line in the Explorer file tree
+.explorer .folder-outer > ul {
+  border-left: none;
+}
+
+// pull sidebars up (Quartz default reserves 6rem for the old in-flow header)
+.page > #quartz-body > .sidebar {
+  padding-top: 2rem;
+}
+
+// keep anchor/TOC jumps clear of the fixed bar
+html {
+  scroll-padding-top: 160px;
+}
+
+// sticky bar stays in flow, so no compensation needed on desktop;
+// keep anchor/TOC jumps clear of it via scroll-padding (see html rule)
+@media all and (max-width: 800px) {
+  .page > #quartz-body > .sidebar.left {
+    padding-top: 2rem;
+  }
+}
